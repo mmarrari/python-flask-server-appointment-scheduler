@@ -26,7 +26,9 @@ and open your browser to here:
 http://localhost:8080/mmarrari/scheduler/1.0.0/ui/
 ```
 
-The API documentation is doc folder in the root directory:
+## Documentation
+
+The API documentation is in the doc folder in the root directory:
 
 ```
 documentation: index.html
