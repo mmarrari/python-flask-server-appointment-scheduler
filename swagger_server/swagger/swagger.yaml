@@ -1,0 +1,90 @@
+openapi: 3.0.0
+info:
+  title: Appointment Scheduler API
+  description: This is a simple API
+  contact:
+    email: mmarrari@sparkdigital.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/mmarrari/scheduler/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: http://localhost:8080/mmarrari/scheduler/1.0.0
+  description: Local Server
+tags:
+- name: schedule
+  description: Operations related to scheduling appointments
+paths:
+  /appointment:
+    get:
+      tags:
+      - schedule
+      summary: searches scheduled appointments
+      description: "By passing the userId, you can search for\nall the appointments\
+        \ available for the user\n"
+      operationId: list_appointments
+      parameters:
+      - name: userId
+        in: query
+        description: pass an User Id for retrieve all the appointments availables
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: email
+          example: mmarrari@sparkdigital.com
+      responses:
+        "200":
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AppointmentItem'
+                x-content-type: application/json
+        "400":
+          description: bad input parameter
+      x-openapi-router-controller: swagger_server.controllers.schedule_controller
+    post:
+      tags:
+      - schedule
+      summary: adds an appointment
+      description: Adds an appointment to the system
+      operationId: add_appointment
+      requestBody:
+        description: Appointment to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppointmentItem'
+      responses:
+        "201":
+          description: appointed created
+        "400":
+          description: "invalid input, object invalid"
+        "409":
+          description: an existing appointment already exists for the date
+      x-openapi-router-controller: swagger_server.controllers.schedule_controller
+components:
+  schemas:
+    AppointmentItem:
+      required:
+      - startDate
+      - userId
+      type: object
+      properties:
+        userId:
+          type: string
+          format: email
+          example: mmarrari@sparkdigital.com
+        startDate:
+          type: string
+          format: date-time
+      example:
+        userId: mmarrari@sparkdigital.com
+        startDate: 2000-01-23T04:56:07.000+00:00
+

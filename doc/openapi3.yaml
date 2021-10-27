@@ -1,0 +1,85 @@
+---
+openapi: 3.0.0
+info:
+  title: Appointment Scheduler API
+  description: This is a simple API
+  contact:
+    email: mmarrari@sparkdigital.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: http://localhost:8080/mmarrari/scheduler/1.0.0
+  description: Local Server
+tags:
+- name: schedule
+  description: Operations related to scheduling appointments
+paths:
+  /appointment:
+    get:
+      tags:
+      - schedule
+      summary: searches scheduled appointments
+      description: |
+        By passing the userId, you can search for
+        all the appointments available for the user
+      operationId: listAppointments
+      parameters:
+      - name: userId
+        in: query
+        description: pass an User Id for retrieve all the appointments availables
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: email
+          example: mmarrari@sparkdigital.com
+      responses:
+        "200":
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AppointmentItem'
+        "400":
+          description: bad input parameter
+    post:
+      tags:
+      - schedule
+      summary: adds an appointment
+      description: Adds an appointment to the system
+      operationId: addAppointment
+      requestBody:
+        description: Appointment to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppointmentItem'
+      responses:
+        "201":
+          description: appointed created
+        "400":
+          description: invalid input, object invalid
+        "409":
+          description: an existing appointment already exists for the date
+components:
+  schemas:
+    AppointmentItem:
+      required:
+      - startDate
+      - userId
+      type: object
+      properties:
+        userId:
+          type: string
+          format: email
+          example: mmarrari@sparkdigital.com
+        startDate:
+          type: string          
+          format: date-time
+          example: '2016-08-29 09:30:00'
+
