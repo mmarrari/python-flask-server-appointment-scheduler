@@ -45,3 +45,12 @@ docker build -t appointment_scheduler .
 # starting up a container
 docker run -p 8080:8080 appointment_scheduler
 ```
+
+## Running from Docker Hub
+
+To run the server from docker hub, please execute the following from the root directory:
+
+```bash
+# running and remove the container after exit
+docker run --rm -p 8080:8080 mmarrari/appointment_scheduler
+```
