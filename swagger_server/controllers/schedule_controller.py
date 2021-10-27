@@ -26,9 +26,11 @@ def add_appointment(body=None):  # noqa: E501
             return abort(409, "All appointments must start and end on the hour or half hour")
         start_date_truncated = body.start_date.replace(minute=0, hour=0, second=0, microsecond=0)
         user_key = str(body.user_id)
+        if body.user_id not in appointments_validation:
+            appointments_validation[user_key] = []
         if body.user_id not in users_appointments:
             users_appointments[user_key] = []
-            appointments_validation[user_key] = []
+
         if start_date_truncated not in appointments_validation[user_key]:
             appointments_validation[user_key].append(start_date_truncated)
         else:
