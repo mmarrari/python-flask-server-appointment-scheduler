@@ -50,6 +50,7 @@ def list_appointments(user_id):  # noqa: E501
 
     :rtype: List[AppointmentItem]
     """
+    global users_appointments
     user_key = str(user_id)
     if user_key not in users_appointments:
         users_appointments[user_key] = []
