@@ -1,7 +1,11 @@
 # Appointment scheduler
 
 ## Overview
-
+This a simple service to help users schedule appointments.
+The service has these requirements:
+all appointments must start and end on the hour or half hour
+all appointments are exactly 30 minutes long
+a user can only have 1 appointment on a calendar date
 
 ## Requirements
 Python 3.5.2+
