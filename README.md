@@ -54,3 +54,5 @@ To run the server from docker hub, please execute the following from the root di
 # running and remove the container after exit
 docker run --rm -p 8080:8080 mmarrari/appointment_scheduler
 ```
+
+consider using the doc/openapi3.yaml file to import the collections to make the requests to the API
